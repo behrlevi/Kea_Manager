@@ -110,6 +110,8 @@ def delete_reservation(subnet_id, ip_address):
 @app.route('/list')
 def list_reservations():
     data = get_reservations()
+    print("Global Reservations:", len(data["global_reservations"]))  # Debug print
+    print("Subnet Reservations:", len(data["subnet_reservations"]))  # Debug print 
     return render_template('list.html', 
                          global_reservations=data["global_reservations"],
                          subnet_reservations=data["subnet_reservations"],
