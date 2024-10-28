@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% block extra_css %}
+<style>
+    .form-container {
+        max-width: 600px;
+        margin: 0 auto;
+        background-color: white;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+    .form-group {
+        margin-bottom: 15px;
+    }
+    .form-group label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+    }
+    .form-group input,
+    .form-group select {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+    .submit-button {
+        padding: 10px 20px;
+        background-color: #2196F3;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        width: 100%;
+        font-size: 16px;
+    }
+    .submit-button:hover {
+        background-color: #1976D2;
+    }
+    h1 {
+        margin-bottom: 20px;
+        text-align: center;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <h1>Add New Reservation</h1>
+    <form action="{{ url_for('add_reservation_route') }}" method="POST">
+        <div class="form-group">
+            <label for="hostname">Hostname:</label>
+            <input type="text" id="hostname" name="hostname" required>
+        </div>
+        <div class="form-group">
+            <label for="ip_address">IP Address:</label>
+            <input type="text" id="ip_address" name="ip_address" required placeholder="192.168.1.100">
+        </div>
+        <div class="form-group">
+            <label for="hw_address">MAC Address:</label>
+            <input type="text" id="hw_address" name="hw_address" required placeholder="00:11:22:33:44:55">
+        </div>
+        <div class="form-group">
+            <label for="subnet_id">Subnet:</label>
+            <select id="subnet_id" name="subnet_id" required>
+                {% for subnet in subnets %}
+                    <option value="{{ subnet.id }}">{{ subnet.network }} (ID: {{ subnet.id }})</option>
+                {% endfor %}
+            </select>
+        </div>
+        <button type="submit" class="submit-button">Add Reservation</button>
+    </form>
+</div>
+{% endblock %}

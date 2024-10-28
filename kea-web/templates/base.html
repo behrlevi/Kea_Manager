@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kea DHCP Manager</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+        }
+        .sidebar {
+            width: 200px;
+            background-color: #2c3e50;
+            color: white;
+            height: 100vh;
+            padding: 20px 0;
+            position: fixed;
+        }
+        .sidebar h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 0 10px;
+        }
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .sidebar li {
+            padding: 10px 20px;
+        }
+        .sidebar a {
+            color: white;
+            text-decoration: none;
+            display: block;
+            padding: 10px;
+            transition: background-color 0.3s;
+        }
+        .sidebar a:hover {
+            background-color: #34495e;
+        }
+        .sidebar a.active {
+            background-color: #3498db;
+        }
+        .content {
+            margin-left: 200px;
+            padding: 20px;
+            flex: 1;
+            background-color: #f5f5f5;
+            min-height: 100vh;
+        }
+        .error {
+            color: red;
+            padding: 10px;
+            margin: 10px 0;
+            background-color: #ffebee;
+            border-radius: 4px;
+        }
+        .success {
+            color: green;
+            padding: 10px;
+            margin: 10px 0;
+            background-color: #e8f5e9;
+            border-radius: 4px;
+        }
+    </style>
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <div class="sidebar">
+        <h2>Kea DHCP Manager</h2>
+        <ul>
+            <li><a href="{{ url_for('list_reservations') }}" {% if request.endpoint == 'list_reservations' %}class="active"{% endif %}>Current Reservations</a></li>
+            <li><a href="{{ url_for('add_reservation_page') }}" {% if request.endpoint == 'add_reservation_page' %}class="active"{% endif %}>Add Reservation</a></li>
+        </ul>
+    </div>
+    <div class="content">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="{{ category }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>
